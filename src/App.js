@@ -1,14 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.generate = this.generate.bind(this);
+
+    this.state = {
+      numbers: []
+    };
+  }
+  
+  generate(e) {
+    e.preventDefault();
+    const numbers = new Set();
+    while (numbers.size < 6) {
+      numbers.add(Math.floor(Math.random() * 60 + 1))
+    }
+    this.setState({
+      numbers: [...numbers].sort((a, b) => a - b)
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <div className="container">
+          { this.state.numbers.map(number => 
+            <div>{number}&nbsp;</div>
+          ) }
+        </div>
+        <button onClick={this.generate} style={{width: '100%'}}>Gerar</button>
       </div>
     );
   }
